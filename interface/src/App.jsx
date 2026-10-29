@@ -7,8 +7,8 @@ function App() {
 
   return (
     <div>
-      <p className='text-amber-200'>testing text</p>
-      <HomePage/>
+      {/* <p className='text-amber-200'>testing text</p>
+      <HomePage/> */}
     </div>
   )
 }

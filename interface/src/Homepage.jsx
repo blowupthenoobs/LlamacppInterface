@@ -2,7 +2,7 @@ import { useState, useRef } from "react"
 import { sendChatMessage } from "./chatbot"
 
 // import NavBar from "./NavBar";
-// import TextMessageBox from "./TextMessageBox";
+import TextMessageBox from "./TextMessageBox";
 
 // Send Icons I've tried
 import { IoSendSharp } from "react-icons/io5";
@@ -10,8 +10,11 @@ import { IoSendSharp } from "react-icons/io5";
 export default function HomePage() {
 
     const typingArea = useRef();
+    const [messageContent, setMessageContent] = useState("");
 
-    const onTextAreaUse = () => {
+    const onTextAreaUse = (newText) => {
+        setMessageContent(newText);
+        
         const area = typingArea.current;
 
         if(!area)
@@ -19,6 +22,10 @@ export default function HomePage() {
 
         area.style.height = "auto";
         area.style.height = area.scrollHeight + "px";
+    }
+
+    const sendMessage = () => {
+        sendChatMessage(messageContent)
     }
 
     return (
@@ -32,8 +39,8 @@ export default function HomePage() {
                 </div>
 
                 <div className="w-[calc(100%+60px)] flex place-self-center min-h-[10%] mt-8 justify-between border-t-2 border-blue-400 pl-7.5 pr-7.5 pb-2.5 pt-2.5">
-                    <textarea ref={typingArea} rows={1} className="py-3 h-12.5 w-[80%] rounded-lg pl-1 ml-2 resize-none mt-2" placeholder="Enter a message here:" onChange={onTextAreaUse}/>
-                    <button className="rounded-full w-12.5 h-12.5 bg-blue-400 ml-5 text-[30px] mt-2 text-white"><IoSendSharp className="ml-1 w-full"/></button>
+                    <textarea ref={typingArea} rows={1} className="py-3 h-12.5 w-[80%] rounded-lg pl-1 ml-2 resize-none mt-2" placeholder="Enter a message here:" onChange={(e) => onTextAreaUse(e.target.value)} value={messageContent}/>
+                    <button className="rounded-full w-12.5 h-12.5 bg-blue-400 ml-5 text-[30px] mt-2 text-white cursor-pointer" onClick={() => sendMessage()}><IoSendSharp className="ml-1 w-full"/></button>
                 </div>
             </div>
         </div>
